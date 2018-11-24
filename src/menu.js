@@ -2,66 +2,66 @@ class Menu {
 
   constructor(options) {
     this.options = options;
-    this.elem = "";
+    this._elem = "";
   }
 
-  get Elem() {
-    if (!this.elem) this.render();
-    return this.elem;
+  get elem() {
+    if (!this._elem) this.render();
+    return this._elem;
   }
 
   render() {
-    this.elem = document.createElement('div');
-    this.elem.className = "menu";
+    this._elem = document.createElement("div");
+    this._elem.className = "menu";
 
-    let titleElem = document.createElement('span');
-    this.elem.appendChild(titleElem);
+    const titleElem = document.createElement("span");
+    this._elem.appendChild(titleElem);
     titleElem.className = "title";
     titleElem.textContent = this.options.title;
 
-    this.elem.onmousedown = () => {
+    this._elem.onmousedown = () => {
       return false;
     };
 
-    this.elem.onclick = event => {
-      if (event.target.closest('.title')) {
+    this._elem.onclick = event => {
+      if (event.target.closest(".title")) {
         this.toggle();
       }
     };
   }
 
   renderItems() {
-    let items = this.options.items || [];
-    let list = document.createElement('ul');
+    const items = this.options.items || [];
+    const list = document.createElement("ul");
     items.forEach(item => {
-      let li = document.createElement('li');
+      let li = document.createElement("li");
       li.textContent = item;
       list.appendChild(li);
     });
-    this.elem.appendChild(list);
+    this._elem.appendChild(list);
   }
 
   open() {
-    if (!this.elem.querySelector('ul')) {
+    if (!this._elem.querySelector("ul")) {
       this.renderItems();
     }
-    this.elem.classList.add('open');
+    this._elem.classList.add("open");
   }
 
   close() {
-    this.elem.classList.remove('open');
+    this._elem.classList.remove("open");
   }
 
   toggle() {
-    this.elem.classList.contains('open') ? this.close() : this.open();
+    this._elem.classList.contains("open") ? this.close() : this.open();
   }
 }
 
-let options = {
+const options = {
   title: "Сладости",
   items: ["Торт", "Пончик", "Пирожное", "Шоколадка", "Мороженое"]
 };
 
-let menu = new Menu(options);
+const menu = new Menu(options);
 
-document.body.appendChild(menu.Elem);
+document.body.appendChild(menu.elem);
